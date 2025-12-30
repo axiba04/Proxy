@@ -167,7 +167,7 @@
         "format": "binary",
         "url": "https://gh-proxy.org/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/private.srs",
         "update_interval": "24h",
-        "download_detour": "🐋 默认节点"
+        "download_detour": "🔄 直连入口"
       },
       {
         "tag": "privateip",
@@ -175,7 +175,7 @@
         "format": "binary",
         "url": "https://gh-proxy.org/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geoip/private.srs",
         "update_interval": "24h",
-        "download_detour": "🐋 默认节点"
+        "download_detour": "🔄 直连入口"
       },
       {
         "tag": "cnsite",
@@ -183,7 +183,7 @@
         "format": "binary",
         "url": "https://gh-proxy.org/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/cn.srs",
         "update_interval": "24h",
-        "download_detour": "🐋 默认节点"
+        "download_detour": "🔄 直连入口"
       },
       {
         "tag": "cnip",
@@ -191,7 +191,7 @@
         "format": "binary",
         "url": "https://gh-proxy.org/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geoip/cn.srs",
         "update_interval": "24h",
-        "download_detour": "🐋 默认节点"
+        "download_detour": "🔄 直连入口"
       },
       {
         "tag": "cngames",
@@ -199,7 +199,7 @@
         "format": "binary",
         "url": "https://gh-proxy.org/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/category-games-!cn@cn.srs",
         "update_interval": "24h",
-        "download_detour": "🐋 默认节点"
+        "download_detour": "🔄 直连入口"
       },
       {
         "tag": "gfw",
@@ -207,7 +207,7 @@
         "format": "binary",
         "url": "https://gh-proxy.org/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/gfw.srs",
         "update_interval": "24h",
-        "download_detour": "🐋 默认节点"
+        "download_detour": "🔄 直连入口"
       },
       {
         "tag": "proxy",
@@ -215,7 +215,7 @@
         "format": "binary",
         "url": "https://gh-proxy.org/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo-lite/geosite/proxy.srs",
         "update_interval": "24h",
-        "download_detour": "🐋 默认节点"
+        "download_detour": "🔄 直连入口"
       },
       {
         "tag": "aiservice",
@@ -223,7 +223,7 @@
         "format": "binary",
         "url": "https://gh-proxy.org/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/category-ai-!cn.srs",
         "update_interval": "24h",
-        "download_detour": "🐋 默认节点"
+        "download_detour": "🔄 直连入口"
       },
       {
         "tag": "paypal",
@@ -231,7 +231,7 @@
         "format": "binary",
         "url": "https://gh-proxy.org/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/paypal.srs",
         "update_interval": "24h",
-        "download_detour": "🐋 默认节点"
+        "download_detour": "🔄 直连入口"
       },
       {
         "tag": "tiktok",
@@ -239,7 +239,7 @@
         "format": "binary",
         "url": "https://gh-proxy.org/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/tiktok.srs",
         "update_interval": "24h",
-        "download_detour": "🐋 默认节点"
+        "download_detour": "🔄 直连入口"
       },
       {
         "tag": "telegramip",
@@ -247,7 +247,7 @@
         "format": "binary",
         "url": "https://gh-proxy.org/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geoip/telegram.srs",
         "update_interval": "24h",
-        "download_detour": "🐋 默认节点"
+        "download_detour": "🔄 直连入口"
       },
       {
         "tag": "telegramsite",
@@ -255,7 +255,7 @@
         "format": "binary",
         "url": "https://gh-proxy.org/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/telegram.srs",
         "update_interval": "24h",
-        "download_detour": "🐋 默认节点"
+        "download_detour": "🔄 直连入口"
       },
       {
         "tag": "netflixsite",
@@ -263,7 +263,7 @@
         "format": "binary",
         "url": "https://gh-proxy.org/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/netflix.srs",
         "update_interval": "24h",
-        "download_detour": "🐋 默认节点"
+        "download_detour": "🔄 直连入口"
       },
       {
         "tag": "netflixip",
@@ -271,7 +271,7 @@
         "format": "binary",
         "url": "https://gh-proxy.org/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geoip/netflix.srs",
         "update_interval": "24h",
-        "download_detour": "🐋 默认节点"
+        "download_detour": "🔄 直连入口"
       },
       {
         "tag": "disney",
@@ -279,7 +279,7 @@
         "format": "binary",
         "url": "https://gh-proxy.org/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/disney.srs",
         "update_interval": "24h",
-        "download_detour": "🐋 默认节点"
+        "download_detour": "🔄 直连入口"
       },
       {
         "tag": "hbo",
@@ -287,7 +287,7 @@
         "format": "binary",
         "url": "https://gh-proxy.org/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/hbo.srs",
         "update_interval": "24h",
-        "download_detour": "🐋 默认节点"
+        "download_detour": "🔄 直连入口"
       },
       {
         "tag": "hulu",
@@ -295,7 +295,7 @@
         "format": "binary",
         "url": "https://gh-proxy.org/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/hulu.srs",
         "update_interval": "24h",
-        "download_detour": "🐋 默认节点"
+        "download_detour": "🔄 直连入口"
       },
       {
         "tag": "bilibili",
@@ -303,7 +303,7 @@
         "format": "binary",
         "url": "https://gh-proxy.org/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/bilibili.srs",
         "update_interval": "24h",
-        "download_detour": "🐋 默认节点"
+        "download_detour": "🔄 直连入口"
       },
       {
         "tag": "notcn",
@@ -311,7 +311,7 @@
         "format": "binary",
         "url": "https://gh-proxy.org/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/geolocation-!cn.srs",
         "update_interval": "24h",
-        "download_detour": "🐋 默认节点"
+        "download_detour": "🔄 直连入口"
       }
     ],
     "rules": [
