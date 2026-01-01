@@ -254,10 +254,6 @@
         "outbound": "Direct-Out"
       },
       {
-        "domain_suffix": ["uhdnow.com"],
-        "outbound": "Emby"
-      },
-      {
         "rule_set": "telegramsite",
         "outbound": "Telegram"
       },
