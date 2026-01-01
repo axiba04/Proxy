@@ -110,17 +110,7 @@
     },
     {
       "type": "selector",
-      "tag": "PayPal",
-      "outbounds": ["Default", "Auto"]
-    },
-    {
-      "type": "selector",
       "tag": "AI-Service",
-      "outbounds": ["Default", "Auto"]
-    },
-    {
-      "type": "selector",
-      "tag": "TikTok",
       "outbounds": ["Default", "Auto"]
     },
     {
@@ -131,11 +121,6 @@
     {
       "type": "selector",
       "tag": "Telegram",
-      "outbounds": ["Default", "Auto"]
-    },
-    {
-      "type": "selector",
-      "tag": "Instagram",
       "outbounds": ["Default", "Auto"]
     },
     {
@@ -192,30 +177,6 @@
         "download_detour": "Direct-Out"
       },
       {
-        "tag": "paypal",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://gh-proxy.org/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/paypal.srs",
-        "update_interval": "24h",
-        "download_detour": "Direct-Out"
-      },
-      {
-        "tag": "tiktok",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://gh-proxy.org/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/tiktok.srs",
-        "update_interval": "24h",
-        "download_detour": "Direct-Out"
-      },
-      {
-        "tag": "Instagram",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://gh-proxy.org/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/instagram.srs",
-        "update_interval": "24h",
-        "download_detour": "Direct-Out"
-      },
-      {
         "tag": "telegramip",
         "type": "remote",
         "format": "binary",
@@ -248,14 +209,6 @@
         "download_detour": "Direct-Out"
       },
       {
-        "tag": "disney",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://gh-proxy.org/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/disney.srs",
-        "update_interval": "24h",
-        "download_detour": "Direct-Out"
-      },
-      {
         "tag": "hbo",
         "type": "remote",
         "format": "binary",
@@ -276,6 +229,14 @@
         "type": "remote",
         "format": "binary",
         "url": "https://gh-proxy.org/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/category-emby.srs",
+        "update_interval": "24h",
+        "download_detour": "Direct-Out"
+      },
+      {
+        "tag": "onedrive",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/onedrive.srs",
         "update_interval": "24h",
         "download_detour": "Direct-Out"
       }
@@ -351,20 +312,8 @@
         "outbound": "Emby"
       },
       {
-        "rule_set": "paypal",
-        "outbound": "PayPal"
-      },
-      {
         "rule_set": "telegramsite",
         "outbound": "Telegram"
-      },
-      {
-        "rule_set": "tiktok",
-        "outbound": "TikTok"
-      },
-      {
-        "rule_set": "Instagram",
-        "outbound": "Instagram"
       },
       {
         "rule_set": "aiservice",
@@ -392,6 +341,10 @@
       {
         "rule_set": "netflixip",
         "outbound": "Streaming-Media"
+      },
+      {
+        "rule_set": "onedrive",
+        "outbound": "Default"
       },
       {
         "rule_set": "cnip",
