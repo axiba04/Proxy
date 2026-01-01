@@ -320,7 +320,7 @@
         "outbound": "AI-Service"
       },
       {
-        "rule_set": ["netflixsite", "hbo", "disney", "hulu"],
+        "rule_set": ["netflixsite", "hbo", "hulu"],
         "outbound": "Streaming-Media"
       },
       {
