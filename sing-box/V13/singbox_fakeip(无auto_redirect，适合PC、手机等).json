@@ -115,18 +115,8 @@
     },
     {
       "type": "selector",
-      "tag": "Streaming-Media",
-      "outbounds": ["Default", "Auto"]
-    },
-    {
-      "type": "selector",
       "tag": "Telegram",
       "outbounds": ["Default", "Auto"]
-    },
-    {
-      "type": "selector",
-      "tag": "Emby",
-      "outbounds": ["Default", "Auto", "Direct-Out"]
     },
     {
       "type": "direct",
@@ -189,46 +179,6 @@
         "type": "remote",
         "format": "binary",
         "url": "https://gh-proxy.org/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/telegram.srs",
-        "update_interval": "24h",
-        "download_detour": "Direct-Out"
-      },
-      {
-        "tag": "netflixsite",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://gh-proxy.org/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/netflix.srs",
-        "update_interval": "24h",
-        "download_detour": "Direct-Out"
-      },
-      {
-        "tag": "netflixip",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://gh-proxy.org/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geoip/netflix.srs",
-        "update_interval": "24h",
-        "download_detour": "Direct-Out"
-      },
-      {
-        "tag": "hbo",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://gh-proxy.org/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/hbo.srs",
-        "update_interval": "24h",
-        "download_detour": "Direct-Out"
-      },
-      {
-        "tag": "hulu",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://gh-proxy.org/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/hulu.srs",
-        "update_interval": "24h",
-        "download_detour": "Direct-Out"
-      },
-      {
-        "tag": "emby",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://gh-proxy.org/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/category-emby.srs",
         "update_interval": "24h",
         "download_detour": "Direct-Out"
       },
@@ -308,20 +258,12 @@
         "outbound": "Emby"
       },
       {
-        "rule_set": "emby",
-        "outbound": "Emby"
-      },
-      {
         "rule_set": "telegramsite",
         "outbound": "Telegram"
       },
       {
         "rule_set": "aiservice",
         "outbound": "AI-Service"
-      },
-      {
-        "rule_set": ["netflixsite", "hbo", "hulu"],
-        "outbound": "Streaming-Media"
       },
       {
         "rule_set": "cngames",
@@ -337,10 +279,6 @@
       {
         "rule_set": "telegramip",
         "outbound": "Telegram"
-      },
-      {
-        "rule_set": "netflixip",
-        "outbound": "Streaming-Media"
       },
       {
         "rule_set": "onedrive",
