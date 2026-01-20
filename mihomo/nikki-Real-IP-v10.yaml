@@ -1,0 +1,437 @@
+# ----------------- 机场订阅 start ----------------- #
+# 锚点
+Sub: &Sub {type: http, interval: 86400, proxy: DIRECT,override: {ip-version: ipv4-prefer}, health-check: {enable: true, url: https://www.gstatic.com/generate_204, interval: 300}}
+
+# url 里填写自己的机场订阅链接,名称（sub-xx）不能重复。填写在引号之间，每个 provider 填写一个机场订阅链接。
+proxy-providers:
+  sub-1:
+    <<: *Sub
+    # 订阅地址
+    url: "此处替换为你的订阅链接"
+    override:
+      additional-prefix: "[✈️-1]"
+      udp: true
+
+  # 第二个订阅连接
+  # sub-2:
+  #   <<: *Sub
+  #   # 订阅地址
+  #   url: "此处替换为你的订阅链接"
+  #   override:
+  #     additional-prefix: "[✈️-2]"
+  #     udp: true
+# ----------------- 机场订阅 end ----------------- #
+
+# ----------------- OpenClash 高级参数配置 start ----------------- #
+# 代理配置
+port: 8080
+mixed-port: 7890
+redir-port: 7891
+tproxy-port: 7892
+socks-port: 1080
+mode: rule
+bind-address: "*"
+ipv6: false
+allow-lan: true
+tcp-concurrent: true
+unified-delay: true
+find-process-mode: strict
+global-client-fingerprint: chrome
+log-level: warning
+
+# NTP 服务器
+ntp:
+  enable: true
+  write-to-system: true
+  server: ntp.aliyun.com
+  port: 123
+  interval: 30
+
+# 减少移动设备耗电问题
+# 详见：https://github.com/vernesong/OpenClash/issues/2614
+# 值参考：https://github.com/nikkinikki-org/OpenWrt-nikki/wiki/FAQ#iphone-%E7%AD%89%E8%AE%BE%E5%A4%87%E5%9C%A8%E9%80%8F%E6%98%8E%E4%BB%A3%E7%90%86%E4%B8%8B%E9%AB%98%E8%80%97%E7%94%B5
+keep-alive-interval: 15
+keep-alive-idle: 600
+
+profile:
+  store-selected: true
+  store-fake-ip: true
+
+experimental:
+  quic-go-disable-gso: false
+  quic-go-disable-ecn: false
+  dialer-ip4p-convert: false
+
+# UI
+external-ui: "/etc/nikki/run/ui"
+external-ui-name: "zbashboard"
+external-ui-url: "https://gh-proxy.com/github.com/Zephyruso/zashboard/releases/latest/download/dist-cdn-fonts.zip"
+external-controller: "[::]:9090"
+# API 认证：默认不开启认证，需要开启的请自行修改
+#secret: "109188"
+#authentication:
+#- nikki:109188
+
+geodata-mode: true
+geodata-loader: standard
+geo-auto-update: true
+geo-update-interval: 24
+geox-url:
+  geoip: "https://gh-proxy.org/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip-lite.dat"
+  geosite: "https://gh-proxy.org/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
+  # Gitee 仓库镜像：如果上面的链接无法下载，请使用下面的链接
+  # geoip: "https://gitee.com/jackiewuu/unraid/raw/master/geo/geoip-lite.dat"
+  # geosite: "https://gitee.com/jackiewuu/unraid/raw/master/geo/geosite.dat"
+
+tun:
+  device: nikki
+  enable: true
+  stack: mixed
+  auto-route: true
+  auto-redirect: true
+  auto-detect-interface: true
+  strict-route: true
+  gso: false
+  gso-max-size: 65536
+  udp-timeout: 300
+  endpoint-independent-nat: false
+  disable-icmp-forwarding: true
+  dns-hijack:
+    - any:53
+    - tcp://any:53
+  route-exclude-address-set:
+    - cn_ip
+  route-exclude-address:
+    # 绕过 Apple 推送通知服务（参考：https://support.apple.com/zh-cn/102266）
+    - 17.249.0.0/16
+    - 17.252.0.0/16
+    - 17.57.144.0/22
+    - 17.188.128.0/18
+    - 17.188.20.0/23
+    # 绕过私有IP
+    - 0.0.0.0/8
+    - 10.0.0.0/8
+    - 100.64.0.0/10
+    - 127.0.0.0/8
+    - 169.254.0.0/16
+    - 172.16.0.0/12
+    - 192.0.0.0/24
+    - 192.0.2.0/24
+    - 192.88.99.0/24
+    - 192.168.0.0/16
+    # Fake-IP
+    #- 198.18.0.0/15
+    - 198.51.100.0/24
+    - 203.0.113.0/24
+    #- 224.0.0.0/3
+    #- ::/127
+    #- fc00::/7
+    #- fe80::/10
+    #- ff00::/8
+
+sniffer:
+  enable: true
+  force-dns-mapping: false
+  parse-pure-ip: true
+  override-destination: true
+  sniff:
+    HTTP:
+      ports: [80, 8080-8880]
+    TLS:
+      ports: [443, 8443]
+    QUIC:
+      ports: [443, 8443]
+  skip-domain:
+    - "*"
+    - "geosite:private"
+    - "geosite:cn"
+    - "Mijia Cloud"
+    - "+.push.apple.com"
+    - "dlg.io.mi.com"
+    - "+.oray.com"
+    - "+.sunlogin.net"
+
+dns:
+  enable: true
+  ipv6: false
+  enhanced-mode: redir-host
+  cache-algorithm: arc
+  prefer-h3: false
+  use-hosts: true
+  use-system-hosts: false
+  listen: 0.0.0.0:7874
+  fake-ip-range: 198.18.0.0/15
+  fake-ip-filter-mode: blacklist
+  respect-rules: false
+
+  "geosite:category-ads-all": rcode://name_error
+
+  default-nameserver:
+    - "https://223.5.5.5/dns-query#h3=true"
+    - "https://223.6.6.6/dns-query#h3=true"
+
+  proxy-server-nameserver:
+    - "https://dns.alidns.com/dns-query#h3=true"
+    - "https://doh.pub/dns-query"
+
+  nameserver:
+    - "https://dns.alidns.com/dns-query#h3=true"
+    - "https://doh.pub/dns-query"
+
+  fallback:
+    - "https://208.67.222.222/dns-query#🎯 代理"
+    - "https://1.0.0.1/dns-query#🎯 代理"
+
+  fallback-filter:
+    geoip: true
+    geoip-code: cn
+    ipcidr:
+      - 0.0.0.0/8
+      - 10.0.0.0/8
+      - 100.64.0.0/10
+      - 127.0.0.0/8
+      - 169.254.0.0/16
+      - 172.16.0.0/12
+      - 192.0.0.0/24
+      - 192.0.2.0/24
+      - 192.88.99.0/24
+      - 192.168.0.0/16
+      - 198.18.0.0/15
+      - 198.51.100.0/24
+      - 203.0.113.0/24
+      - 224.0.0.0/3
+      - ::/127
+      - fc00::/7
+      - fe80::/10
+      - ff00::/8
+    #domain:
+    #- '+.jsdelivr.net'
+# ----------------- OpenClash 高级参数配置 end ----------------- #
+
+# ----------------- 锚点 start ----------------- #
+Default: &Default {type: select, proxies: [🎯 代理,🔰 直连,🇭🇰 香港,🇨🇳 台湾,🇯🇵 日本,🇸🇬 新加坡,🇺🇸 美国,🌐 其它地区,🌏 手动选择,🚫 阻断]}
+
+Proxy: &Proxy {type: select, proxies: [🔙 全节点故障转移,🔰 直连,🇭🇰 香港,🇨🇳 台湾,🇯🇵 日本,🇸🇬 新加坡,🇺🇸 美国,🌐 其它地区,🌏 手动选择]}
+
+Fallback: &Fallback {type: fallback, include-all: true, interval: 300, lazy: false}
+
+Select: &Select {type: select, include-all: true, exclude-filter: "实验|应急|续费|流量"}
+
+Auto: &Auto {type: url-test, interval: 300, tolerance: 100, include-all: true, url: 'https://www.gstatic.com/generate_204', exclude-filter: "实验|应急|续费|流量"}
+
+Block: &Block {type: select, proxies: [🚫 阻断, 🔰 直连]}
+# ----------------- 锚点 end ----------------- #
+
+# ----------------- 代理组 start ----------------- #
+proxies:
+  - { name: "🔰 直连", type: direct, udp: true }
+  - { name: "🚫 阻断", type: reject, udp: true }
+
+proxy-groups:
+  # 代理组
+  - { name: 🎯 代理, <<: *Proxy }
+  # Google
+  - { name: 🔎 Google, <<: *Default }
+  - { name: 🏪 GooglePlay, <<: *Default }
+  # 流媒体 & 音乐
+  - { name: 🎞️ YouTube, <<: *Default }
+  - { name: 🎬 HBO, <<: *Default }
+  - { name: 📽️ Disney, <<: *Default }
+  - { name: 🍿 Netflix, <<: *Default }
+  - { name: 🎧 Spotify, <<: *Default }
+  # Game
+  - { name: 🎮 Steam, <<: *Default }
+  - { name: 🎮 Epic, <<: *Default }
+  - { name: 🎮 PlayStation, <<: *Default }
+  - { name: 🎮 XBOX, <<: *Default }
+  - { name: 🎮 Origin, <<: *Default }
+  - { name: 🕹️ 其他游戏平台, <<: *Default }
+  # 社交媒体
+  - { name: 💓 Tiktok, <<: *Default }
+  - { name: 🦜 Twitter, <<: *Default }
+  - { name: 🗣️ 国外社交平台, <<: *Default }
+  # AI
+  - { name: 🤖 OpenAI, <<: *Default }
+  - { name: 🤖 Gemini, <<: *Default }
+  - { name: 🤖 Apple Intelligence, <<: *Default }
+  - { name: 🤖 其他AI, <<: *Default }
+  # Apple
+  - { name: 🍎 Apple, <<: *Default }
+  - { name: ☁️ iCloud, <<: *Default }
+  # Microsoft
+  - { name: 📥 OneDrive, <<: *Default }
+  - { name: Ⓜ️ Microsoft, <<: *Default }
+  - { name: 🖥️ Github, <<: *Default }
+  # 其他
+  - { name: ☎️ Telegram, <<: *Default }
+  - { name: ↕️ PT站点, <<: *Default }
+  - { name: 💶 PayPal, <<: *Default }
+  - { name: 🔌 Nvidia, <<: *Default }
+  - { name: 🐋 Docker, <<: *Default }
+  - { name: ⏩ Speedtest, <<: *Default }
+  - { name: 🚫 广告拦截, <<: *Block }
+  - { name: ⚙️ 非国内地址, <<: *Default }
+  - { name: 🐟 漏网之鱼, <<: *Default }
+  # ----------------- #代理组 end ----------------- #
+
+  # ----------------- 地区分组 start ----------------- #
+  - {name: 🔙 全节点故障转移, type: fallback, proxies: [🇭🇰 香港-自动, 🇯🇵 日本-自动,🇸🇬 新加坡-自动,🇨🇳 台湾-自动,🇺🇸 美国-自动,🌐 其它地区-自动]}
+  - {name: 🌏 手动选择, type: select, include-all: true, exclude-filter: "实验|应急|续费|流量"}
+
+  # 地理组
+  - {name: 🇭🇰 香港, proxies: [🇭🇰 香港-自动, 🇭🇰 香港-手动], type: select,}
+  - {name: 🇯🇵 日本, proxies: [🇯🇵 日本-自动, 🇯🇵 日本-手动], type: select,}
+  - {name: 🇸🇬 新加坡, proxies: [🇸🇬 新加坡-自动, 🇸🇬 新加坡-手动], type: select,}
+  - {name: 🇨🇳 台湾, proxies: [🇨🇳 台湾-自动, 🇨🇳 台湾-手动], type: select,}
+  - {name: 🇺🇸 美国, proxies: [🇺🇸 美国-自动, 🇺🇸 美国-手动], type: select,}
+  - {name: 🌐 其它地区, proxies: [🌐 其它地区-自动, 🌐 其它地区-手动], type: select,}
+
+  # 地理组自动
+  - {name: 🇭🇰 香港-自动, filter: "(?i)港|hk|hongkong|hong kong", <<: *Fallback}
+  - {name: 🇯🇵 日本-自动, filter: "(?=.*(广日|日本|JP|川日|东京|大阪|泉日|埼玉|沪日|深日|🇯🇵|Japan)).*$", <<: *Fallback}
+  - {name: 🇸🇬 新加坡-自动, filter: "(?=.*(广新|新加坡|SG|坡|狮城|🇸🇬|Singapore)).*$", <<: *Fallback}
+  - {name: 🇨🇳 台湾-自动, filter: "(?=.*(广台|台湾|台灣|TW|Tai Wan|🇹🇼|🇨🇳|TaiWan|Taiwan)).*$", <<: *Fallback}
+  - {name: 🇺🇸 美国-自动, filter: "(?=.*(广美|US|美国|纽约|波特兰|达拉斯|俄勒|凤凰城|费利蒙|洛杉|圣何塞|圣克拉|西雅|芝加|🇺🇸|United States)).*$", <<: *Fallback}
+  - {name: 🌐 其它地区-自动, filter: "^((?!(直连|拒绝|广港|香港|HK|Hong Kong|🇭🇰|HongKong|广台|台湾|台灣|TW|Tai Wan|🇹🇼|🇨🇳|TaiWan|Taiwan|广日|日本|JP|川日|东京|大阪|泉日|埼玉|沪日|深日|🇯🇵|Japan|广新|新加坡|SG|坡|狮城|🇸🇬|Singapore|广美|US|美国|纽约|波特兰|达拉斯|俄勒|凤凰城|费利蒙|洛杉|圣何塞|圣克拉|西雅|芝加|🇺🇸|United States)).)*$", <<: *Fallback}
+
+  # 地理组手动
+  - {name: 🇭🇰 香港-手动, filter: "(?=.*(广港|香港|HK|Hong Kong|🇭🇰|HongKong)).*$", <<: *Select}
+  - {name: 🇯🇵 日本-手动, filter: "(?=.*(广日|日本|JP|川日|东京|大阪|泉日|埼玉|沪日|深日|🇯🇵|Japan)).*$", <<: *Select}
+  - {name: 🇸🇬 新加坡-手动, filter: "(?=.*(广新|新加坡|SG|坡|狮城|🇸🇬|Singapore)).*$", <<: *Select}
+  - {name: 🇨🇳 台湾-手动, filter: "(?=.*(广台|台湾|台灣|TW|Tai Wan|🇹🇼|🇨🇳|TaiWan|Taiwan)).*$", <<: *Select}
+  - {name: 🇺🇸 美国-手动, filter: "(?=.*(广美|US|美国|纽约|波特兰|达拉斯|俄勒|凤凰城|费利蒙|洛杉|圣何塞|圣克拉|西雅|芝加|🇺🇸|United States)).*$", <<: *Select}
+  - {name: 🌐 其它地区-手动, filter: "^((?!(直连|拒绝|广港|香港|HK|Hong Kong|🇭🇰|HongKong|广台|台湾|台灣|TW|Tai Wan|🇹🇼|🇨🇳|TaiWan|Taiwan|广日|日本|JP|川日|东京|大阪|泉日|埼玉|沪日|深日|🇯🇵|Japan|广新|新加坡|SG|坡|狮城|🇸🇬|Singapore|广美|US|美国|纽约|波特兰|达拉斯|俄勒|凤凰城|费利蒙|洛杉|圣何塞|圣克拉|西雅|芝加|🇺🇸|United States)).)*$", <<: *Select}
+# ----------------- 地区分组 end ----------------- #
+
+
+# ----------------- 规则 start ----------------- #
+rules:
+  # 防止 YouTube 等使用 QUIC 导致速度不佳, 禁用 443 端口 UDP 流量（不包括国内），如不需要请自行注释。
+  - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOSITE,cn))),REJECT
+  - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOIP,CN))),REJECT
+
+  # 自定义规则
+  - DOMAIN,plex.tv.direct,🔰 直连
+  - DOMAIN,v4.plex.tv,🔰 直连
+  - DOMAIN,plex.direct,🔰 直连
+  - DOMAIN-SUFFIX,plex.tv,🎯 代理
+  - DOMAIN-KEYWORD,gh-proxy,🔰 直连
+  - GEOSITE,category-ads-all,🚫 广告拦截
+
+
+  # -------- geosite 直连域名 start -------- #
+  # BT/PT
+  - GEOSITE,category-public-tracker,🔰 直连
+
+  # Apple & Microsoft 的 CN 域名
+  - GEOSITE,apple-cn,🔰 直连
+  - GEOSITE,apple@cn,🔰 直连
+  - GEOSITE,icloud@cn,🔰 直连
+  - GEOSITE,apple-update,🔰 直连
+  - GEOSITE,microsoft@cn,🔰 直连
+
+  # 游戏平台（Steam、Epic、PS等）的 CN 域名（共8个集合）
+  - GEOSITE,steam@cn,🔰 直连
+  - GEOSITE,epicgames@cn,🔰 直连
+  - GEOSITE,xbox@cn,🔰 直连
+  - GEOSITE,category-games-cn,🔰 直连
+  - GEOSITE,category-games@cn,🔰 直连
+  - GEOSITE,category-games-!cn@cn,🔰 直连
+  - GEOSITE,category-game-accelerator-cn,🔰 直连
+  - GEOSITE,category-game-platforms-download@cn,🔰 直连
+
+  # Google 的 CN 域名
+  - GEOSITE,google-play@cn,🔰 直连
+
+  # 其他可直连域名
+  - GEOSITE,private,🔰 直连
+  - GEOSITE,jsdelivr,🔰 直连
+  - GEOSITE,category-ntp,🔰 直连
+  - GEOSITE,category-ddns,🔰 直连
+  - GEOSITE,nvidia@cn,🔰 直连
+  - GEOSITE,paypal@cn,🔰 直连
+  - GEOSITE,cn,🔰 直连
+  # -------- geosite 直连域名 end -------- #
+
+
+  # -------- geosite 代理组 start -------- #
+  # 测速
+  - GEOSITE,category-speedtest,⏩ Speedtest
+  # 游戏
+  - GEOSITE,steam,🎮 Steam
+  - GEOSITE,epicgames,🎮 Epic
+  - GEOSITE,playstation,🎮 XBOX
+  - GEOSITE,xbox,🎮 PlayStation
+  - GEOSITE,origin,🎮 Origin
+  - GEOSITE,category-games-!cn,🕹️ 其他游戏平台
+  - GEOSITE,category-game-platforms-download,🕹️ 其他游戏平台
+  - GEOSITE,category-games,🕹️ 其他游戏平台
+  # AI
+  - GEOSITE,openai,🤖 OpenAI
+  - GEOSITE,google-gemini,🤖 Gemini
+  - GEOSITE,apple-intelligence,🤖 Apple Intelligence
+  - GEOSITE,category-ai-chat-!cn,🤖 其他AI
+  # Apple
+  - GEOSITE,icloud,☁️ iCloud
+  - GEOSITE,apple,🍎 Apple
+  # 流媒体 & 音乐
+  - GEOSITE,hbo,🎬 HBO
+  - GEOSITE,disney,📽️ Disney
+  - GEOSITE,netflix,🍿 Netflix
+  - GEOSITE,youtube,🎞️ YouTube
+  - GEOSITE,spotify ,🎧 Spotify
+  # 社交平台
+  - GEOSITE,tiktok,💓 Tiktok
+  - GEOSITE,twitter,🦜 Twitter
+  - GEOSITE,category-social-media-!cn,🗣️ 国外社交平台
+  # Microsoft
+  - GEOSITE,github,🖥️ Github
+  - GEOSITE,onedrive,📥 OneDrive
+  - GEOSITE,microsoft,Ⓜ️ Microsoft
+  # Google
+  - GEOSITE,google-play,🏪 GooglePlay
+  - GEOSITE,google,🔎 Google
+  # 其他
+  - GEOSITE,tracker, ↕️ PT站点
+  - GEOSITE,paypal,💶 PayPal
+  - GEOSITE,nvidia,🔌 Nvidia
+  - GEOSITE,docker,🐋 Docker
+  # 其他国外域名
+  - GEOSITE,gfw,⚙️ 非国内地址
+  - GEOSITE,geolocation-!cn,⚙️ 非国内地址
+  # -------- geosite 代理组 end -------- #
+
+
+  # -------- geoip 代理组 start -------- #
+  - GEOIP,google,🔎 Google,no-resolve
+  - GEOIP,telegram,☎️ Telegram,no-resolve
+  - GEOIP,netflix,🍿 Netflix,no-resolve
+  - GEOIP,twitter,🦜 Twitter,no-resolve
+  - GEOIP,private,🔰 直连,no-resolve
+  - RULE-SET,cn_ip,🔰 直连,no-resolve
+  # -------- geoip 代理组 end -------- #
+
+
+  # 兜底规则
+  - DST-PORT,80/8080/443/8443,⚙️ 非国内地址
+  - MATCH,🐟 漏网之鱼
+# ----------------- 规则 end ----------------- #
+
+
+# ----------------- rule-set start ----------------- #
+rule-anchor:
+  ip: &ip { type: http, interval: 86400, behavior: ipcidr, format: mrs }
+  domain: &domain { type: http, interval: 86400, behavior: domain, format: mrs }
+  class: &class { type: http, interval: 86400, behavior: classical, format: text }
+
+rule-providers:
+  # 用于 route-exclude-address-set 排除中国大陆IP
+  cn_ip:
+    <<: *ip
+    url: "https://gh-proxy.com/raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.mrs"
+
+  # 用于 Fake IP 过滤
+  fakeip_filter:
+    <<: *domain
+    url: "https://gh-proxy.com/https://raw.githubusercontent.com/wwqgtxx/clash-rules/release/fakeip-filter.mrs"
+# ----------------- rule-set end ----------------- #
