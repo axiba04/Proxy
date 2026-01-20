@@ -1,1 +1,10 @@
-*.610521.xyz
+alist.610521.xyz
+strm.610521.xyz
+password.610521.xyz
+photo.610521.xyz
+bark.610521.xyz
+s3.610521.xyz
+emby.610521.xyz
+substore.610521.xyz
+webdav.610521.xyz
+copy.610521.xyz
