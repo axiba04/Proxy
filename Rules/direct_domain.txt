@@ -8,3 +8,4 @@ emby.610521.xyz
 substore.610521.xyz
 webdav.610521.xyz
 copy.610521.xyz
+www.bygcloud.com
