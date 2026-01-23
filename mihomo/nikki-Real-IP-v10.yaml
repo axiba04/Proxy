@@ -7,7 +7,7 @@ proxy-providers:
   sub-1:
     <<: *Sub
     # 订阅地址
-    url: "http://10.1.1.109:3001/4BfEkBKuK91PuJstdqMQ84gz/download/collection/substore?target=ClashMeta"
+    url: ""
     override:
       additional-prefix: "[✈️-1]"
       udp: true
