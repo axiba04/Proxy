@@ -7,7 +7,7 @@ proxy-providers:
   sub-1:
     <<: *Sub
     # 订阅地址
-    url: "此处替换为你的订阅链接"
+    url: "http://10.1.1.109:3001/4BfEkBKuK91PuJstdqMQ84gz/download/collection/substore?target=ClashMeta"
     override:
       additional-prefix: "[✈️-1]"
       udp: true
@@ -311,6 +311,7 @@ rules:
   - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOIP,CN))),REJECT
 
   # 自定义规则
+  - DOMAIN-SUFFIX,610521.xyz.direct,🔰 直连
   - DOMAIN,plex.tv.direct,🔰 直连
   - DOMAIN,v4.plex.tv,🔰 直连
   - DOMAIN,plex.direct,🔰 直连
