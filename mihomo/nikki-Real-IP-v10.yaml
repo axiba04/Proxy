@@ -4,7 +4,7 @@ Sub: &Sub {type: http, interval: 86400, proxy: DIRECT,override: {ip-version: ipv
 
 # url 里填写自己的机场订阅链接,名称（sub-xx）不能重复。填写在引号之间，每个 provider 填写一个机场订阅链接。
 proxy-providers:
-  sub-1:
+  FlyBird:
     <<: *Sub
     # 订阅地址
     url: ""
@@ -13,13 +13,13 @@ proxy-providers:
       udp: true
 
   # 第二个订阅连接
-  # sub-2:
-  #   <<: *Sub
-  #   # 订阅地址
-  #   url: "此处替换为你的订阅链接"
-  #   override:
-  #     additional-prefix: "[✈️-2]"
-  #     udp: true
+  BaiYueGuang:
+    <<: *Sub
+    # 订阅地址
+    url: ""
+    override:
+      additional-prefix: "[✈️-2]"
+      udp: true
 # ----------------- 机场订阅 end ----------------- #
 
 # ----------------- OpenClash 高级参数配置 start ----------------- #
@@ -287,7 +287,7 @@ proxy-groups:
   - {name: 🌐 其它地区, proxies: [🌐 其它地区-自动, 🌐 其它地区-手动], type: select,}
 
   # 地理组自动
-  - {name: 🇭🇰 香港-自动, filter: "(?i)港|hk|hongkong|hong kong", <<: *Fallback}
+  - {name: 🇭🇰 香港-自动, filter: "(?i)广港|香港|HK|Hong Kong|🇭🇰|HongKong", <<: *Fallback}
   - {name: 🇯🇵 日本-自动, filter: "(?=.*(广日|日本|JP|川日|东京|大阪|泉日|埼玉|沪日|深日|🇯🇵|Japan)).*$", <<: *Fallback}
   - {name: 🇸🇬 新加坡-自动, filter: "(?=.*(广新|新加坡|SG|坡|狮城|🇸🇬|Singapore)).*$", <<: *Fallback}
   - {name: 🇨🇳 台湾-自动, filter: "(?=.*(广台|台湾|台灣|TW|Tai Wan|🇹🇼|🇨🇳|TaiWan|Taiwan)).*$", <<: *Fallback}
@@ -311,7 +311,7 @@ rules:
   - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOIP,CN))),REJECT
 
   # 自定义规则
-  - DOMAIN-SUFFIX,610521.xyz.direct,🔰 直连
+  - DOMAIN-SUFFIX,610521.xyz,🔰 直连
   - DOMAIN,plex.tv.direct,🔰 直连
   - DOMAIN,v4.plex.tv,🔰 直连
   - DOMAIN,plex.direct,🔰 直连
