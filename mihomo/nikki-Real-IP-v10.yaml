@@ -311,11 +311,7 @@ rules:
   - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOIP,CN))),REJECT
 
   # 自定义规则
-  - DOMAIN-SUFFIX,610521.xyz,🔰 直连
-  - DOMAIN,plex.tv.direct,🔰 直连
-  - DOMAIN,v4.plex.tv,🔰 直连
-  - DOMAIN,plex.direct,🔰 直连
-  - DOMAIN-SUFFIX,plex.tv,🎯 代理
+  - RULE-SET,my_direct_rules,🔰 直连
   - DOMAIN-KEYWORD,gh-proxy,🔰 直连
   - GEOSITE,category-ads-all,🚫 广告拦截
 
@@ -424,8 +420,15 @@ rule-anchor:
   ip: &ip { type: http, interval: 86400, behavior: ipcidr, format: mrs }
   domain: &domain { type: http, interval: 86400, behavior: domain, format: mrs }
   class: &class { type: http, interval: 86400, behavior: classical, format: text }
+  class_yaml: &class_yaml { type: http, interval: 86400, behavior: classical, format: yaml }
 
 rule-providers:
+  # 自定义 GitHub 直连规则
+  my_direct_rules:
+    <<: *class_yaml
+    url: "https://gh-proxy.com/https://raw.githubusercontent.com/axiba04/Proxy/refs/heads/main/Rules/mihomo/direct.yaml"
+    # 指定到你要求的路径
+    path: /etc/nikki/run/providers/rule/direct.yaml
   # 用于 route-exclude-address-set 排除中国大陆IP
   cn_ip:
     <<: *ip
