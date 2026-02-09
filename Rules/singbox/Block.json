@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "rules": [
+    {
+      "process_name": [
+        "sldIM.exe",
+        "Listary.exe",
+        "DocBox.exe"
+      ]
+    },
+    {
+       "process_path_regex": [
+        "(?i).*[\\\\\\\\/]SolidWorks Corp[\\\\\\\\/].*\\.exe$",
+        "(?i).*[\\\\\\\\/]Solidworks Shared[\\\\\\\\/].*\\.exe$",
+        "(?i).*[\\\\\\\\/]Microsoft[\\\\\\\\/]EdgeUpdate[\\\\\\\\/].*\\.exe$"
+      ]
+    }
+  ]
+}
