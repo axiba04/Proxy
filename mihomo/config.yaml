@@ -1,8 +1,8 @@
-# 必读！！！
-# 此版本没有做防泄露处理，如介意请使用另一个名字为configdns的版本
-# 注意规则在满足自己需求情况下，尽量做到精简，不要过度复杂，以免影响性能。
-# 跑裸核用户请自行去掉下方控制面板模块的注释。
-# 机场订阅
+# =========================================================
+# 旁路由终极优化版 (配合 iKuai-bypass + PaoPao DNS + Nikki 纯内核)
+# =========================================================
+
+# ----------------- 机场订阅 -----------------
 proxy-providers:
   Airport1:
     url: ""
@@ -14,11 +14,10 @@ proxy-providers:
       interval: 300
     proxy: 直连
 
-# 节点信息
 proxies:
   - {name: 直连, type: direct}
 
-# 全局配置 
+# ----------------- 全局配置 -----------------
 mixed-port: 7890
 allow-lan: true
 bind-address: "*"
@@ -32,14 +31,33 @@ keep-alive-interval: 15
 profile:
   store-selected: true
 
-# 为防止使用插件朋友遇到面板问题，我注释掉了此模块。
+# ----------------- 核心外部模块 -----------------
+# NTP 时间同步 (极其重要：防止 OpenWrt 掉电/重启后时间错乱导致 SSL 证书失效、节点彻底阻断)
+ntp:
+  enable: true
+  write-to-system: true
+  server: ntp.aliyun.com
+  port: 123
+  interval: 30
+
+# Geodata 数据库自动更新 (已剔除第三方镜像，直连官方原源保障稳定性)
+#geodata-mode: true
+#geodata-loader: standard
+#geo-auto-update: true
+#geo-update-interval: 24
+#geox-url:
+#  geoip: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip-lite.dat"
+#  geosite: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
+
+# UI面板参数 (供需要时使用)
 external-controller: 0.0.0.0:9090
 secret: ""
 external-ui: ui
 external-ui-name: zashboard
 external-ui-url: "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
 
-# 嗅探（redir-host 模式下非常依赖嗅探来匹配规则，请保持开启）
+# ----------------- 嗅探模块 -----------------
+# redir-host 模式下非常依赖嗅探来匹配域名规则，请保持开启
 sniffer:
   enable: true
   sniff:
@@ -54,20 +72,17 @@ sniffer:
     - "Mijia Cloud"
     - "+.push.apple.com"
 
-# 入站
+# ----------------- 入站 (TUN 模块) -----------------
 tun:
   enable: true
-  # system/gvisor/mixed
   stack: mixed
   dns-hijack: ["any:53", "tcp://any:53"]
-  #使用nikki，混入全部不修改的情况，开启接口指定为nikki
-  #device: nikki
-  #使用仅内核自行修改下面三项为true
   auto-route: true
   auto-redirect: true
   auto-detect-interface: true
 
-# DNS模块 (专为 redir-host + iKuai 国内IP白名单优化)
+# ----------------- DNS 模块 -----------------
+# 专为 redir-host + iKuai 国内IP白名单优化，彻底杜绝死锁
 dns:
   enable: true
   cache-algorithm: arc
@@ -75,7 +90,8 @@ dns:
   ipv6: false
   respect-rules: true
   enhanced-mode: redir-host
-  # 基础 DNS，用于解析下方的 DoH 域名
+  
+  # 基础系统自举 DNS，必须为纯 IP
   default-nameserver:
     - 223.5.5.5
     - 119.29.29.29
@@ -87,14 +103,12 @@ dns:
   direct-nameserver:
     - https://dns.alidns.com/dns-query
     - https://doh.pub/dns-query
-  # 代理规则 & 漏网之鱼 DNS (必须是海外干净 DNS，获取真实海外 IP，防污染)
+  # 代理规则 DNS (获取纯净真实海外 IP，防污染)
   nameserver:
     - https://8.8.8.8/dns-query
     - https://1.1.1.1/dns-query
- 
-# 出站策略，根据自己情况调整每个策略里分组排序，增删都可以，比如把美国自动放到第一个，比如删除香港故转，注意别漏掉表情逗号等。
-# 如果相应分组没有筛选到对应的国家，请根据自己节点名字调整筛选关键字。
-# 没有再使用锚点，是考虑很多新手修改难度，这样新手修改某个分组更容易些。
+
+# ----------------- 代理策略组 -----------------
 proxy-groups:
   - {name: 🚀 默认代理, type: select, proxies: [🔯 香港故转, 🔯 日本故转, 🔯 狮城故转, 🔯 美国故转, ♻️ 香港自动, ♻️ 日本自动, ♻️ 狮城自动, ♻️ 美国自动, ♻️ 自动选择, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇸🇬 狮城节点, 🇺🇲 美国节点, 🌐 全部节点, 直连]}
   - {name: 📹 YouTube, type: select, proxies: [🔯 美国故转, 🔯 香港故转, 🔯 日本故转, 🔯 狮城故转, ♻️ 美国自动, ♻️ 香港自动, ♻️ 日本自动, ♻️ 狮城自动, ♻️ 自动选择, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇸🇬 狮城节点, 🇺🇲 美国节点, 🌐 全部节点, 直连]}
@@ -123,8 +137,13 @@ proxy-groups:
   - {name: ♻️ 自动选择, type: url-test, include-all: true, tolerance: 20, interval: 300, filter: "^((?!(直连)).)*$"}
   - {name: 🌐 全部节点, type: select, include-all: true}
 
-# 规则匹配
+# ----------------- 规则匹配 -----------------
 rules:
+  # 强制屏蔽海外 UDP 443 端口，防止 QUIC 协议被运营商 QoS 导致 YouTube 降速
+  - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((RULE-SET,cn_domain))),REJECT
+  - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((RULE-SET,cn_ip))),REJECT
+
+  # 常规分流规则
   - RULE-SET,private_ip,直连,no-resolve
   - RULE-SET,private_domain,直连
   - DOMAIN-SUFFIX,qichiyu.com,🚀 默认代理
@@ -149,12 +168,12 @@ rules:
   - RULE-SET,cn_ip,直连
   - MATCH,🐟 漏网之鱼
 
-# 规则集
-## type：可选http/file/inline  behavior：可选domain/ipcidr/classical format：可选yaml/text/mrs
+# ----------------- 规则集 -----------------
 rule-anchor:
   ip: &ip {type: http, interval: 86400, behavior: ipcidr, format: mrs}
   domain: &domain {type: http, interval: 86400, behavior: domain, format: mrs}
   class: &class {type: http, interval: 86400, behavior: classical, format: text}
+
 rule-providers: 
   private_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs"}
   proxylite: { <<: *class, url: "https://raw.githubusercontent.com/qichiyuhub/rule/refs/heads/main/proxy.list"}
