@@ -1,5 +1,2 @@
 payload:
-  - 'DOMAIN-SUFFIX,610521.xyz'
-  - 'DOMAIN-KEYWORD,icloud'
-  - 'DOMAIN-KEYWORD,t-rex.tzfile.com'
   - 'IP-CIDR,45.142.157.145/32'
