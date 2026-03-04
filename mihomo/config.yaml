@@ -5,7 +5,7 @@
 # 机场订阅
 proxy-providers:
   Airport1:
-    url: "https://KVctScGQkE.todust.cc/877e364b15c43f77546baa26ee13e0f6&name=白月光"
+    url: ""
     type: http
     interval: 86400
     health-check:
