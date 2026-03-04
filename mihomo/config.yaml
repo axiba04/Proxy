@@ -139,6 +139,7 @@ proxy-groups:
 
 # ----------------- 规则匹配 -----------------
 rules:
+  - RULE-SET,my_direct_rules,直连
   # 强制屏蔽海外 UDP 443 端口，防止 QUIC 协议被运营商 QoS 导致 YouTube 降速
   - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((RULE-SET,cn_domain))),REJECT
   - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((RULE-SET,cn_ip))),REJECT
@@ -175,6 +176,13 @@ rule-anchor:
   class: &class {type: http, interval: 86400, behavior: classical, format: text}
 
 rule-providers: 
+  my_direct_rules:
+    type: http
+    behavior: classical
+    format: yaml
+    url: "https://raw.githubusercontent.com/axiba04/Proxy/refs/heads/main/Rules/mihomo/direct.yaml"
+    interval: 86400  # 每 24 小时自动更新一次
+    path: /etc/nikki/run/providers/rule/my_direct.yaml # 本地缓存路径，冷启动防断网
   private_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs"}
   proxylite: { <<: *class, url: "https://raw.githubusercontent.com/qichiyuhub/rule/refs/heads/main/proxy.list"}
   ai: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ai-!cn.mrs" }
