@@ -1,2 +1,3 @@
 payload:
   - 'IP-CIDR,45.142.157.145/32'
+  - 'DOMAIN-SUFFIX,610521.xyz'
