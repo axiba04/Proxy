@@ -1,11 +1,10 @@
 # =========================================================
 # 旁路由终极优化版 (配合 iKuai-bypass + PaoPao DNS + Nikki 纯内核)
-# 集成 Claude 专项分流版
 # =========================================================
 
 # ----------------- 机场订阅 -----------------
 proxy-providers:
-  CatNet:
+  SSRDOG:
     url: ""
     type: http
     interval: 86400
@@ -14,7 +13,7 @@ proxy-providers:
       url: https://www.gstatic.com/generate_204
       interval: 300
     proxy: 直连
-  SSRDOG:
+  BYG:
     url: ""
     type: http
     interval: 86400
@@ -35,7 +34,6 @@ ipv6: false
 unified-delay: true
 tcp-concurrent: true
 log-level: warning
-global-client-fingerprint: chrome
 keep-alive-idle: 600
 keep-alive-interval: 15
 profile:
@@ -58,6 +56,9 @@ external-ui-url: "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-p
 # ----------------- 嗅探模块 -----------------
 sniffer:
   enable: true
+  force-dns-mapping: true
+  parse-pure-ip: true
+  override-destination: false
   sniff:
     HTTP:
       ports: [80, 8080-8880]
@@ -132,14 +133,11 @@ proxy-groups:
 rules:
   - RULE-SET,my_direct_rules,直连
   # 屏蔽海外 UDP 443
-  - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((RULE-SET,cn_domain))),REJECT
-  - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((RULE-SET,cn_ip))),REJECT
+  - AND,(DST-PORT,443),(NETWORK,UDP),(NOT,((RULE-SET,cn_ip))),REJECT
 
   # 常规分流
   - RULE-SET,private_ip,直连,no-resolve
   - RULE-SET,private_domain,直连
-  - DOMAIN-SUFFIX,qichiyu.com,🚀 默认代理
-  - RULE-SET,proxylite,🚀 默认代理
   - RULE-SET,ai,🤖 Ai
   - RULE-SET,github_domain,👨🏿‍💻 GitHub
   - RULE-SET,youtube_domain,📹 YouTube
@@ -172,7 +170,6 @@ rule-providers:
     path: /etc/nikki/run/providers/rule/my_direct.yaml
 
   private_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs"}
-  proxylite: { <<: *class, url: "https://raw.githubusercontent.com/qichiyuhub/rule/refs/heads/main/proxy.list"}
   ai: { <<: *domain, url: "https://github.com/QuixoticHeart/rule-set/raw/refs/heads/ruleset/meta/domain/ai.mrs" }
   youtube_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/youtube.mrs"}
   google_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs"}
