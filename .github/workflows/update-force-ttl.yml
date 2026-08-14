@@ -1,0 +1,37 @@
+name: Update PaoPaoDNS Force TTL Rules
+
+on:
+  workflow_dispatch:
+
+  schedule:
+    - cron: "53 4 * * *"
+      timezone: "Asia/Shanghai"
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Generate force TTL rules
+        run: python3 scripts/update_force_ttl.py
+
+      - name: Commit changes
+        shell: bash
+        run: |
+          if [ -z "$(git status --porcelain -- force_ttl_rules.txt)" ]; then
+            echo "No rule changes."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add -- force_ttl_rules.txt
+          git commit -m "chore: update PaoPaoDNS force TTL rules"
+          git push
