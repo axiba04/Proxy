@@ -1,0 +1,150 @@
+# =========================================================
+# iKuai Bypass v4.2.0
+# 适配：iKuai 3.7.21 x64
+#
+# 网络拓扑：
+# iKuai       : 10.1.1.1
+# OpenWrt     : 10.1.1.2
+# PaoPaoDNS   : 10.1.1.3
+# 普通客户端   : 10.1.1.10-10.1.1.254
+#
+# iKuai：
+# WAN1 = 正常互联网出口
+# WAN2 = OpenWrt / 旁路由线路
+#
+# 分工：
+# CN IP        -> WAN1
+# GFW/特殊域名 -> WAN2 -> OpenWrt -> mihomo
+# 其它非 CN IP -> iKuai 默认 WAN2 -> OpenWrt -> mihomo
+#
+# OpenWrt 自己发出的流量：
+# 源 IP 10.1.1.2 -> iKuai 手工策略强制 WAN1
+# =========================================================
+
+
+# ----------------- iKuai 登录 -----------------
+
+ikuai-url: http://10.1.1.1
+
+username: admin
+
+# 改成你当前新的 iKuai 管理密码
+password: ""
+
+
+# ----------------- 定时更新 -----------------
+
+# 每天 07:00 自动更新
+cron: "0 7 * * *"
+
+# 更新失败后的重试等待
+AddErrRetryWait: 10s
+
+# 每批规则写入 iKuai 后等待
+AddWait: 1s
+
+# GitHub Raw 加速
+github-proxy: "https://gh-proxy.com/"
+
+
+# =========================================================
+# 自定义运营商（IP 分流）
+#
+# 只维护中国大陆 IPv4。
+#
+# 不再单独维护：
+# - Google
+# - Telegram
+#
+# 因为非 CN 流量最终都进入 OpenWrt/mihomo，
+# 再由 mihomo 做 Google / Telegram / AI 等细分。
+# =========================================================
+
+custom-isp:
+  - name: 国内IP列表
+    url: https://raw.githubusercontent.com/Loyalsoldier/geoip/release/text/cn.txt
+    tag: ipcn
+
+
+# =========================================================
+# 域名分流
+#
+# 域名分流优先于纯 IP 分流。
+#
+# 作用：
+# 1. GFW 域名强制 WAN2
+# 2. 项目特殊 bypass 域名强制 WAN2
+# 3. 项目特殊 direct 域名强制 WAN1
+#
+# Google / YouTube / AI / GitHub 等不在这里进一步细分，
+# 进入 OpenWrt 后交给 mihomo。
+# =========================================================
+
+stream-domain:
+
+  # -----------------
+  # GFW 域名 -> WAN2
+  # -----------------
+  - interface: wan2
+    src-addr: 10.1.1.10-10.1.1.254
+    src-addr-opt-ipgroup: ""
+    url: https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/gfw.txt
+    tag: gfw
+
+  # -----------------
+  # 特殊旁路由域名 -> WAN2
+  # -----------------
+  - interface: wan2
+    src-addr: 10.1.1.10-10.1.1.254
+    src-addr-opt-ipgroup: ""
+    url: https://raw.githubusercontent.com/joyanhui/ikuai-bypass/main/private/bypass-domain-list.txt
+    tag: private_bypass
+
+  # -----------------
+  # 特殊直连域名 -> WAN1
+  # -----------------
+  - interface: wan1
+    src-addr: 10.1.1.10-10.1.1.254
+    src-addr-opt-ipgroup: ""
+    url: https://raw.githubusercontent.com/joyanhui/ikuai-bypass/main/private/direct-domain-list.txt
+    tag: private_direct
+
+
+# =========================================================
+# 以下三个模块不使用
+#
+# 当前运行模式：
+# -m ispdomain
+#
+# ispdomain 只使用：
+# custom-isp
+# stream-domain
+#
+# 所以这些显式置空。
+# =========================================================
+
+ip-group: []
+
+ipv6-group: []
+
+stream-ipport: []
+
+
+# =========================================================
+# ikuai-bypass WebUI
+# =========================================================
+
+webui:
+
+  port: "19000"
+
+  user: admin
+
+  # 建议设置与 iKuai 不同的密码
+  pass: ""
+
+  enable: true
+
+  enable-update: false
+
+  cdn-prefix: https://cdn.jsdelivr.net/npm

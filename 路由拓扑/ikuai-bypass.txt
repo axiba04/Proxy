@@ -1,0 +1,4 @@
+./ikuai-bypass \
+  -c /root/ikuai-bypass/config.yml \
+  -r cron \
+  -m ispdomain
