@@ -1,7 +1,7 @@
 # ==========================================
 # PaoPaoDNS Force TTL Rules (Bytedance)
-# Updated: 2026-08-14 13:12:30 (北京时间)
-# Count:   366 domains
+# Updated: 2026-08-16 05:10:44 (北京时间)
+# Count:   368 domains
 # DNS:     180.184.1.1:53
 # Source 1:  https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/bytedance
 # Source 2:  https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/DouYin/DouYin.list
@@ -24,6 +24,7 @@ ali-gtm-01.net@180.184.1.1:53
 ali-gtm-pressure.com@180.184.1.1:53
 ali-restore.net@180.184.1.1:53
 amemv.com@180.184.1.1:53
+applogcdn.com@180.184.1.1:53
 arco.design@180.184.1.1:53
 baike.com@180.184.1.1:53
 baikevod.com@180.184.1.1:53
@@ -265,6 +266,7 @@ qingfuwucdn.net@180.184.1.1:53
 qualitycloud.top@180.184.1.1:53
 rsproxy.cn@180.184.1.1:53
 samasty.com@180.184.1.1:53
+searchpstatp.com@180.184.1.1:53
 searchstatic.com@180.184.1.1:53
 searchtoutiaolive.com@180.184.1.1:53
 sf3-ttcdn-tos.pstatp.com@180.184.1.1:53
