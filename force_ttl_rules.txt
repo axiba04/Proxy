@@ -1,7 +1,7 @@
 # ==========================================
 # PaoPaoDNS Force TTL Rules (Bytedance)
-# Updated: 2026-08-16 05:10:44 (北京时间)
-# Count:   368 domains
+# Updated: 2026-08-17 05:09:51 (北京时间)
+# Count:   372 domains
 # DNS:     180.184.1.1:53
 # Source 1:  https://raw.githubusercontent.com/v2fly/domain-list-community/refs/heads/master/data/bytedance
 # Source 2:  https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/DouYin/DouYin.list
@@ -215,7 +215,9 @@ jokecommunity.com@180.184.1.1:53
 jokecommunity.net@180.184.1.1:53
 jstti.com@180.184.1.1:53
 jtamac.com@180.184.1.1:53
+kesong.co@180.184.1.1:53
 kuailepipixia.com@180.184.1.1:53
+letsign.com@180.184.1.1:53
 lf3-static.bytednsdoc.com@180.184.1.1:53
 livecdnstatic.com@180.184.1.1:53
 local-ip.online@180.184.1.1:53
@@ -341,6 +343,7 @@ wtturl.cn@180.184.1.1:53
 wukong.com@180.184.1.1:53
 wukongwenda.cn@180.184.1.1:53
 wukongwenda.com@180.184.1.1:53
+xiaohe.cn@180.184.1.1:53
 xiaoxiaapi.com@180.184.1.1:53
 xiguaapp.cn@180.184.1.1:53
 xiguaapp.com@180.184.1.1:53
@@ -348,6 +351,7 @@ xiguashipin.cn@180.184.1.1:53
 xiguashipin.net@180.184.1.1:53
 xiguavideo.cn@180.184.1.1:53
 xiguavideo.net@180.184.1.1:53
+xingtu.cn@180.184.1.1:53
 xsgtvacct.com@180.184.1.1:53
 yhgfb-cn-static.com@180.184.1.1:53
 zijieapi.cn@180.184.1.1:53
