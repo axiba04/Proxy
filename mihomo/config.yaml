@@ -15,6 +15,17 @@ proxy-providers:
     proxy: 直连
     override:
       additional-suffix: " [SSRDOG]"
+  Mesl:
+    url: ""
+    type: http
+    interval: 86400
+    health-check:
+      enable: true
+      url: https://www.gstatic.com/generate_204
+      interval: 300
+    proxy: 直连
+    override:
+      additional-suffix: " [Mesl]"
   BYG:
     url: ""
     type: http
@@ -151,6 +162,7 @@ rules:
   - RULE-SET,apple_proxy_domain,🍎 Apple
   - RULE-SET,telegram_domain,📲 Telegram
   - RULE-SET,apple_cn_domain,直连
+  - RULE-SET,steamcn_domain,直连
   - RULE-SET,google_ip,🍀 Google
   - RULE-SET,telegram_ip,📲 Telegram
   - RULE-SET,cn_domain,直连
@@ -165,6 +177,7 @@ rule-anchor:
 rule-providers: 
   private_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs"}
   ai: { <<: *domain, url: "https://github.com/QuixoticHeart/rule-set/raw/refs/heads/ruleset/meta/domain/ai.mrs" }
+  steamcn_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/steam@cn.mrs" }
   youtube_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/youtube.mrs"}
   google_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs"}
   github_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/github.mrs"}
